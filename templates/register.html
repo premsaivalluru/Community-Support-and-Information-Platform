@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Started Page</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header class="get-started-header">
+        <div class="logo-image">
+            <img src="{% static 'images/logo.png' %}" alt="Logo" height="80px" width="100px">
+        </div>
+        <div class=" title">
+            <h1>MY COMMUNITY HUB</h1>
+            <p>A COMMUNITY SUPPORT & INFORMATION PLATFORM</p>
+        </div>
+        <div class="Login-Register">
+            <a class="login-btn" href="{% url 'Login Page' %}" >LOGIN</a>
+            <span>|</span>
+            <a class="register-btn" href="{% url 'Register Page' %}">REGISTER</a>
+        </div>
+        {% if username %}
+            <a class="profile-icon" href="{% url 'Profile Page' username %}"><img src="{% static 'images/profile-icon.png' %}" alt="Icon" height="60px" width="60px"></a>
+        {% else %}
+            <a class="profile-icon" href="{% url 'Login Page' %}"><img src="{% static 'images/profile-icon.png' %}" alt="Icon" height="60px" width="60px"></a>
+        {% endif %}
+    </header>
+    <main class="get-started-page">
+        <!-- Get Started Block -->
+        <div class="get-started-window page active">
+            <div class="logo-window">
+                <img src="{% static 'images/logo.png' %}" height="100%" width="90%">
+            </div>
+            <form class="get-started-form" method="POST" action = "{% url 'Submit Get Started Form' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h1>WELCOME!</h1>
+                <div class="name">
+                    <h4>Name:</h4>
+                    <div class="name-inputs">
+                        <input name = "first_name" type="text" placeholder="Enter First Name">
+                        <input name = "last_name" type="text" placeholder="Enter Last Name">
+                    </div>
+                </div>
+                <div class="number">
+                    <h4>Phone Number:</h4>
+                    <div class="send-otp">
+                        <input name="phone_number" type="text" placeholder="Enter your phone number" value="+91">
+                        <button class="register-send-otp-btn" type="button">Send OTP</button>
+                    </div>
+                    <div class="verify-otp">
+                        <input name="otp" type="text" placeholder="Enter OTP" value="" disabled>
+                        <button type="button" class="register-otp-btn" disabled>Verify</button>
+                    </div>
+                </div>
+                <div class="photo">
+                    <h4>Upload your profile photo: </h4>
+                    <input type="file" name="user_photo" class="user-photo" accept="image/*">
+                    <small class="error error-file">Supported formats: .jpg, .jpeg, .png</small>
+                </div>
+                <div class="proffession">
+                    <h4>Proffession:</h4>
+                    <input class="profession-input" name="user_proffession" placeholder="Enter proffession">
+                </div>
+                <div class="address">
+                    <h4>Address:</h4>
+                    <input class="address-input" name="user_address" placeholder="Enter village name">
+                </div>
+                <div class="password">
+                    <h4>Password:</h4>
+                    <input name="password1" type="password" placeholder="Set Password">
+                    <input name="password2" type="password" placeholder="Re-enter Password">
+                    <small class="error error-passwords">Passwords must be atleast 8 characters long and containa a mix of uppercase, lowercase, numbers and special characters.</small>
+                </div>
+                <div class="agree">
+                    <input type="checkbox" name="agree" value="True">
+                    <p>I agree to receive SMS notifications.</p>
+                </div>
+                <button type="submit" class="get-started-button" disabled>Get Started</button>
+                <span>Already have an account? <a href="{% url 'Login Page' %}">Sign in</a></span>
+            </form>
+        </div>
+        {% if messages %}
+        <script>
+            {% for message in messages %}
+                alert("{{message}}")
+            {% endfor %}
+        </script>
+        {% endif %}
+        <script src="{% static 'script.js' %}"></script>
+    </main>
+</body>
+</html>

@@ -1,0 +1,132 @@
+cd {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Community Hub</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+    <header class="home-page-header">
+        <div class="logo-image">
+            <img src="{% static 'images/logo.png' %}" alt="Logo" height="80px" width="100px">
+        </div>
+        <div class=" title">
+            <h1>MY COMMUNITY HUB</h1>
+            <p>A COMMUNITY SUPPORT & INFORMATION PLATFORM</p>
+        </div>
+        <div class="Login-Register">
+            {% if username %}
+                <div class="user">Welcome, {{username}}!  <a href="{% url 'Logout Page' %}">Logout</a></div>
+            {% else %}
+                <a class="login-btn" href="{% url 'Login Page' %}" >LOGIN</a>
+                <span> | </span>
+                <a class="register-btn" href="{% url 'Register Page' %}">REGISTER</a>
+            {% endif %}
+        </div>
+        {% if username %}
+            <a class="profile-icon" href="{% url 'Profile Page' username %}"><img src="{% static 'images/profile-icon.png' %}" alt="Icon" height="60px" width="60px"></a>
+        {% else %}
+            <a class="profile-icon" href="{% url 'Login Page' %}"><img src="{% static 'images/profile-icon.png' %}" alt="Icon" height="60px" width="60px"></a>
+        {% endif %}
+    </header>
+    <main class="contact-main">
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="{% url 'Home Page' %}">HOME</a></li>
+                <li><a href="{% url 'All Posts Page' %}">ALL POSTS</a></li>
+                <li><a href="{% url 'Create Post Page' %}">CREATE POST</a></li>
+                <li><a href="{% url 'About Page' %}">ABOUT US</a></li>
+                <li><a href="{% url 'Feedback Page' %}">FEEDBACK</a></li>
+                <li><a href="{% url 'Contact Page' %}">CONTACT US</a></li>
+            </ul>
+        </nav>
+        <nav class="mobile-navbar">
+            <div class="menu-icon"><i class="fa-solid fa-bars"></i></div>
+            <ul class="mobile-nav-links">
+                <li><i class="fa-solid fa-arrow-left"></i></li>
+                {% if username %}
+                    <li><a href="{% url 'Profile Page' username %}">Hello! {{username}}</a></li>
+                    <li><a href="{% url 'Logout Page' %}">LOGOUT</a></li>
+                {% else %}
+                    <li><a href="{% url 'Register Page' %}">REGISTER</a></li>
+                    <li><a href="{% url 'Login Page' %}">LOGIN</a></li>
+                {% endif %}
+                <li><a href="{% url 'Home Page' %}">HOME</a></li>
+                <li><a href="{% url 'All Posts Page' %}">ALL POSTS</a></li>
+                <li><a href="{% url 'Create Post Page' %}">CREATE POST</a></li>
+                <li><a href="{% url 'About Page' %}">ABOUT US</a></li>
+                <li><a href="{% url 'Feedback Page' %}">FEEDBACK</a></li>
+                <li><a href="{% url 'Contact Page' %}">CONTACT US</a></li>
+            </ul>
+        </nav>
+        <div class="about-us-page">
+            <div class="logo-window">
+                <img src="{% static 'images/logo.png' %}" height="100%" width="90%">
+            </div>
+            <div class="about-info">
+                <div class="about-title"><h1>ABOUT US</h1></div>
+                <div class="who-we-are">
+                    <h2>Who We Are</h2>
+                    <p>My Community Hub is a community-driven support and information platform built to connect people, share knowledge, and provide timely assistance in times of need.
+                        We believe in the power of collaboration, awareness, and local action to strengthen our communities.
+                    </p>
+                    <hr>
+                </div>
+                <div class="our-mission">
+                    <h2>Our Mission:</h2>
+                    <p>Our mission is to empower citizens, farmers, volunteers, and organizations by offering a single platform where:</p>
+                    <ul>
+                        <li>People can request help during emergencies</li>
+                        <li>Farmers can report issues such as crop diseases and get access to solutions</li>
+                        <li>Local shops, NGOs, and volunteers can share updates, events, and opportunities</li>
+                        <li>Communities can stay informed about health, education, employment, and general public matters</li>
+                    </ul>
+                    <hr>
+                </div>
+                <div class="what-we-offer">
+                    <h2>What We Offer:</h2>
+                    <ul>
+                        <li><b>All Posts Section</b> - A space where everyone can view and engage with community updates</li>
+                        <li><b>Create Post</b> - Easily share information, request help, or post opportunities</li>
+                        <li><b>Categories</b> - Agriculture, Employment, Education, Medical, Events, and more</li>
+                        <li><b>Location-based Information</b> - Stay updated with local and nearby happenings</li>
+                        <li><b>Feedback & Contact</b> - Share your suggestions and reach out directly to us</li>
+                    </ul>
+                    <hr>
+                </div>
+                <div class="our-values">
+                    <h2>Our Values:</h2>
+                    <ul>
+                        <li>Collaboration - Bringing people together for a stronger community</li>
+                        <li>Inclusivity - Everyone has a voice, and every concern matters</li>
+                        <li>Innovation - Using technology to solve local challenges</li>
+                        <li>Service - Helping people through collective efforts</li>
+                    </ul>
+                    <hr>
+                </div>
+                <div class="join-us">
+                    <h2>Join Us:</h2>
+                    <p>Be part of the movement!</p>
+                    <p>Whether you are a student, a farmer, a volunteer, or a professional, your contribution makes a difference.
+                        Together, we can create a stronger, more connected community.
+                    </p>
+                    <hr>
+                    <h2>Join us as a Volunteer?</h2>
+                    <p>Contact us through the <a href= {% url 'Contact Page' %}>Contact Us</a> page!</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    {% if messages %}
+        <script>
+            {% for message in messages %}
+                alert("{{message}}")
+            {% endfor %}
+        </script>
+    {% endif %}
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>

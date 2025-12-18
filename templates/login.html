@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header class="get-started-header">
+        <div class="logo-image">
+            <img src="{% static 'images/logo.png' %}" alt="Logo" height="80px" width="100px">
+        </div>
+        <div class=" title">
+            <h1>MY COMMUNITY HUB</h1>
+            <p>A COMMUNITY SUPPORT & INFORMATION PLATFORM</p>
+        </div>
+        <div class="Login-Register">
+            <a class="login-btn" href="{% url 'Login Page' %}" >LOGIN</a>
+            <span>|</span>
+            <a class="register-btn" href="{% url 'Register Page' %}">REGISTER</a>
+        </div>
+        {% if username %}
+            <a class="profile-icon" href="{% url 'Profile Page' username %}"><img src="{% static 'images/profile-icon.png' %}" alt="Icon" height="60px" width="60px"></a>
+        {% else %}
+            <a class="profile-icon" href="{% url 'Login Page' %}"><img src="{% static 'images/profile-icon.png' %}" alt="Icon" height="60px" width="60px"></a>
+        {% endif %}
+    </header>
+    <main class="login-main">
+    <!-- Login Page -->
+        <div class="login-page page active">
+            <div class="logo-window">
+                <img src="{% static 'images/logo.png' %}" height="100%" width="100%" alt="MY COMMUNITY HUB">
+            </div>
+            <form class="login-form" method="POST" action="{% url 'Login User'%}">
+                {% csrf_token %}
+                <h4>Login with phone number:</h4>
+                <input name="phone-number" type="text" placeholder="Enter your phone number" value="+91">
+                <input name="password" type="password" placeholder="Enter your password">
+                <button type="submit" class="login-btn">Login</button>
+                <a onclick="show_page('forgot-page')">Forgot Password?</a>
+                <span>New user? <a href="{% url 'Register Page' %}">Get Started</a></span>
+            </form>
+        </div>
+        <!-- Forget Page -->
+        <div class="forgot-page page">
+            <div class="logo-window">
+                <img src="{% static 'images/logo.png' %}" height="100%" width="100%" alt="MY COMMUNITY HUD">
+            </div>
+            <form class="forgot-form">
+                {% csrf_token %}
+                <div class="forgot-text"><h4>Forgot Passoword?</h4></div>
+                <p>No worries, we will guide you through the reset instructions</p>
+                <div class="phone-number">
+                    <h4>Phone Number:</h4>
+                    <input name = "forgot-phone-number" type="text" placeholder="Enter registered phone number" value="+91">
+                </div>
+                <button class="forgot-send-otp-btn" type="button">Send OTP</button>
+                <a onclick="show_page('login-page')"> <- Back to login </a>
+                <span>New user? <a href="{% url 'Register Page'%}">Get Started</a></span>
+            </form>
+        </div>
+        <!-- OTP Verify Page -->        
+        <div class="otp-verify page">
+            <div class="logo-window">
+                <img src="{% static 'images/logo.png' %}" height="100%" width="100%" alt="MY COMMUNITY HUD">
+            </div>
+            <form class="verify-form forgot-form">
+                {% csrf_token %}
+                <div id="otp-verify-text" class="forgot-text"><h4>OTP Verification</h4></div>
+                <p>We have sent a 6 digit code to your phone number</p>
+                <div class="otp phone-number">
+                    <h4>OTP:</h4>
+                    <input name="forgot-otp" type="text" placeholder="Enter otp">
+                </div>
+                <button type="button" class="forgot-verify-otp-btn">Verify</button>
+                <a onclick="show_page('login-page')"> <- Back to login</a>
+                <span>New user? <a href="{% url 'Register Page'%}">Get Started</a></span>
+            </form>
+        </div>
+        <!-- Reset Password Page -->
+        <div class="reset-password page">
+            <div class="logo-window">
+                <img src="{% static 'images/logo.png' %}" height="100%" width="100%" alt="MY COMMUNITY HUD">
+            </div>
+            <form class="reset-form forgot-form" method="POST" action="{% url 'Reset Password' %}">
+                {% csrf_token %}
+                <div id="reset-text" class="forgot-text"><h4>Reset Password</h4></div>
+                <input name="password1" type="password" placeholder="Enter new password">
+                <input name="password2" type="password" placeholder="Re-enter new password">
+                <button class="reser-password-btn" type="submit">Change Password</button>
+                <a onclick="show_page('login-page')"> <- Back to login</a>
+                <span>New user? <a href="{% url 'Register Page'%}">Get Started</a></span>
+            </form>
+        </div>
+    </main>
+    {% if messages %}
+        <script>
+            {% for message in messages %}
+                alert("{{message}}")
+            {% endfor %}
+        </script>
+    {% endif %}
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>

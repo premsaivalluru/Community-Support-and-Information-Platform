@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Community Hub</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+    <header class="home-page-header">
+        <div class="logo-image">
+            <img src="{% static 'images/logo.png' %}" alt="Logo" height="80px" width="100px">
+        </div>
+        <div class=" title">
+            <h1>MY COMMUNITY HUB</h1>
+            <p>A COMMUNITY SUPPORT & INFORMATION PLATFORM</p>
+        </div>
+        <div class="Login-Register">
+            {% if username %}
+                <div class="user">Welcome, {{username}}!  <a href="{% url 'Logout Page' %}">Logout</a></div>
+            {% else %}
+                <a class="login-btn" href="{% url 'Login Page' %}" >LOGIN</a>
+                <span> | </span>
+                <a class="register-btn" href="{% url 'Register Page' %}">REGISTER</a>
+            {% endif %}
+        </div>
+        {% if username %}
+            <a class="profile-icon" href="{% url 'Profile Page' username %}"><img src="{% static 'images/profile-icon.png' %}" alt="Icon" height="60px" width="60px"></a>
+        {% else %}
+            <a class="profile-icon" href="{% url 'Login Page' %}"><img src="{% static 'images/profile-icon.png' %}" alt="Icon" height="60px" width="60px"></a>
+        {% endif %}
+    </header>
+    <main class="feedback-main">
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="{% url 'Home Page' %}">HOME</a></li>
+                <li><a href="{% url 'All Posts Page' %}">ALL POSTS</a></li>
+                <li><a href="{% url 'Create Post Page' %}">CREATE POST</a></li>
+                <li><a href="{% url 'About Page' %}">ABOUT US</a></li>
+                <li><a href="{% url 'Feedback Page' %}">FEEDBACK</a></li>
+                <li><a href="{% url 'Contact Page' %}">CONTACT US</a></li>
+            </ul>
+        </nav>
+        <nav class="mobile-navbar">
+            <div class="menu-icon"><i class="fa-solid fa-bars"></i></div>
+            <ul class="mobile-nav-links">
+                <li><i class="fa-solid fa-arrow-left"></i></li>
+                {% if username %}
+                    <li><a href="{% url 'Profile Page' username %}">Hello! {{username}}</a></li>
+                    <li><a href="{% url 'Logout Page' %}">LOGOUT</a></li>
+                {% else %}
+                    <li><a href="{% url 'Register Page' %}">REGISTER</a></li>
+                    <li><a href="{% url 'Login Page' %}">LOGIN</a></li>
+                {% endif %}
+                <li><a href="{% url 'Home Page' %}">HOME</a></li>
+                <li><a href="{% url 'All Posts Page' %}">ALL POSTS</a></li>
+                <li><a href="{% url 'Create Post Page' %}">CREATE POST</a></li>
+                <li><a href="{% url 'About Page' %}">ABOUT US</a></li>
+                <li><a href="{% url 'Feedback Page' %}">FEEDBACK</a></li>
+                <li><a href="{% url 'Contact Page' %}">CONTACT US</a></li>
+            </ul>
+        </nav>
+        <div class="feedback page">
+            <div class="logo-window">
+                <img src="{% static 'images/logo.png' %}" height="100%" width="100%" alt="MY COMMUNITY HUD">
+            </div>
+            <form class="feedback-form forgot-form" method="POST" action="{% url 'Submit Feedback' %}">
+                {% csrf_token %}
+                <h1>FEEDBACK</h1>
+                <p>We'd love to hear your about our platform. Kindly give your genuine feedback for us.</p>
+                <div class="feedback-rating">
+                    <span><h4>Rating: </h4><p><b>(Out of 5.0)</b></p></span>
+                    <input name="feedback_rating" placeholder="Enter your rating">
+                </div>
+                <div class="feedback-description">
+                    <h4>Your Feedback:</h4>
+                    <textarea name="feedback_description" placeholder="Enter feedback here...."></textarea>
+                </div>
+                <div class="feedback-author">
+                    <h4>Your Name:</h4>
+                    <input name="author_name" class="author-name" placeholder="Enter your name">
+                </div>
+                <button type="submit" class="feedback-submit-btn">Send Feedabck</button>
+            </form>
+        </div>
+    </main>
+    {% if messages %}
+        <script>
+            {% for message in messages %}
+                alert("{{message}}")
+            {% endfor %}
+        </script>
+    {% endif %}
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>
