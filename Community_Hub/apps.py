@@ -1,0 +1,9 @@
+from django.apps import AppConfig
+
+
+class CommunityHubConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'Community_Hub'
+    
+    def ready(self):
+        import Community_Hub.signals
